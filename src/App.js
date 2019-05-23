@@ -6,6 +6,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 import Element from "./Element";
+import Modal from "./Modal";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons'
@@ -17,6 +18,7 @@ const config = {
 function App() {
   const [data, setData] = useState(null);
   const [query, setQuery] = useState(1);
+  const [modal, setModal] = useState(null);
 
   const getFetchUrl = useCallback(() => {
     return "https://jsonplaceholder.typicode.com/photos?albumId=" + query;
@@ -36,8 +38,18 @@ function App() {
     setQuery(newDay);
   }
 
+  const handleDetail = (e) => {
+    console.log(e);
+    setModal(e);
+  }
+
+  const handleCloseModal = () => {
+    setModal(null);
+  }
+
   return (
     <React.Fragment>
+      <Modal data={modal} handleCloseModal={handleCloseModal} />
       <HeaderS>
         <UL>
           <LI ><BtnList active={query === 1} onClick={() => console.log(1)}>Dia 1</BtnList></LI>
@@ -53,12 +65,12 @@ function App() {
         </Left>
         <Container>
           <CurrentDay>Dia {query}</CurrentDay>
-          {data && data.map((e, k) => k < 4 ? <Element data={e} /> : null)}
+          {data && data.map((e, k) => k < 4 ? <Element handleDetail={handleDetail} data={e} /> : null)}
         </Container>
         <Rigth>
           <BtnRight onClick={() => handleChangeQuery((query + 1))}><FontAwesomeIcon style={{ marginTop: "5px" }} icon={faAngleRight} /></BtnRight>
         </Rigth>
-      </Main>
+      </Main>escape
       <FooterS></FooterS>
     </React.Fragment>
   );

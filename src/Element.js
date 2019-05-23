@@ -4,9 +4,10 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBaby } from '@fortawesome/free-solid-svg-icons'
 
-const Element = ({ data }) => {
-    console.log(data);
+const Element = ({ data, handleDetail }) => {
+    
     return (
+        <a onClick={() => handleDetail(data)}>
         <Container>
             <Img src={data.thumbnailUrl} />
             <SubContent>
@@ -17,6 +18,7 @@ const Element = ({ data }) => {
                 </Titles>
             </SubContent>
         </Container>
+        </a>
     )
 };
 
@@ -41,6 +43,7 @@ const Container = styled.div`
     border-radius: 10px;
     box-shadow: 0px 4px 4px 2px #ddd;
     margin: 10px;
+    cursor: pointer;
     `;
 const Img = styled.img`
         height: 125px;
